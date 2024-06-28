@@ -18,7 +18,7 @@ const WishlistPage = () => {
   const getUser = async () => {
     try {
       const res = await axios.get("/api/users");
-      const data = res.data;
+      const { data } = res;
       setSignedInUser(data);
       setLoading(false);
     } catch (error) {
@@ -41,8 +41,7 @@ const WishlistPage = () => {
 
     const wishlistProducts = await Promise.all(
       signedInUser.wishlist.map(async (productId) => {
-        const res = await getProductDetails(productId);
-        return res;
+        return await getProductDetails(productId);
       }),
     );
     setWishlist(wishlistProducts);

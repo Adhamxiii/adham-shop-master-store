@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { Heart } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -44,7 +44,7 @@ const HeartFav = ({
     e.preventDefault();
 
     if (!session?.user) {
-      router.push("/auth/login");
+      signIn('google')
       return;
     } else {
       try {

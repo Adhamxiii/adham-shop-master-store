@@ -3,7 +3,7 @@
 import useCart from "@/lib/hooks/useCart";
 import axios from "axios";
 import { MinusCircle, PlusCircle, Trash } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -32,7 +32,7 @@ const CartPage = () => {
   const checkoutHandler = async () => {
     try {
       if (!session) {
-        router.push("/auth/login");
+        signIn('google')
       } else {
         const res = await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/checkout`,

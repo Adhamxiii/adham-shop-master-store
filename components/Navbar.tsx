@@ -21,6 +21,15 @@ const Navbar = () => {
 
   const router = useRouter();
 
+  const handleProtectedLink = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, path: string) => {
+    e.preventDefault();
+    if (session?.user) {
+      router.push(path);
+    } else {
+      signIn('google');
+    }
+  };
+
   return (
     <div className="sticky top-0 z-10 flex items-center justify-between gap-2 bg-white px-10 py-2 max-sm:px-2">
       <Link href="/">
@@ -35,13 +44,15 @@ const Navbar = () => {
           Home
         </Link>
         <Link
-          href={session?.user ? "/wishlist" : "/auth/login"}
+          href="/wishlist"
+          onClick={(e) => handleProtectedLink(e, "/wishlist")}
           className={`hover:text-red-1 ${pathname === "/wishlist" && "text-red-1"}`}
         >
           Wishlist
         </Link>
         <Link
-          href={session?.user ? "/orders" : "/auth/login"}
+          href="/orders"
+          onClick={(e) => handleProtectedLink(e, "/orders")}
           className={`hover:text-red-1 ${pathname === "/orders" && "text-red-1"}`}
         >
           Orders
@@ -85,13 +96,15 @@ const Navbar = () => {
         {dropdownMenu && (
           <div className="absolute right-5 top-12 flex flex-col gap-2 rounded-lg border bg-white p-3 text-base-bold lg:hidden">
             <Link
-              href={session?.user ? "/wishlist" : "/auth/login"}
+              href="/wishlist"
+              onClick={(e) => handleProtectedLink(e, "/wishlist")}
               className="hover:text-red-1"
             >
               Wishlist
             </Link>
             <Link
-              href={session?.user ? "/orders" : "/auth/login"}
+              href="/orders"
+              onClick={(e) => handleProtectedLink(e, "/orders")}
               className="hover:text-red-1"
             >
               Orders

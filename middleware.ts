@@ -4,16 +4,16 @@ import { NextResponse } from "next/server";
 
 export default withAuth(
   async function middleware(request: NextRequestWithAuth) {
-    const pathname = request.nextUrl.pathname;
+    const { pathname } = request.nextUrl;
     const isAuth = await getToken({ req: request });
-    const protectedPages = ["/profile"];
+    const protectedPages = ["/wishlist", "/orders"];
     const isAuthPage = pathname.startsWith("/auth");
     const isProtectedPage = protectedPages.some((page) =>
-      pathname.startsWith(page)
+      pathname.startsWith(page),
     );
 
     if (!isAuth && isProtectedPage) {
-      const redirectTo = new URL("/auth/login", request.url);
+      const redirectTo = new URL("/auth/loginadfdsfasdfasf", request.url);
       redirectTo.searchParams.set("callbackUrl", pathname);
       return NextResponse.redirect(redirectTo);
     }
@@ -35,9 +35,9 @@ export default withAuth(
         return !!token;
       },
     },
-  }
+  },
 );
 
 export const config = {
-  matcher: ["/profile"],
+  matcher: ["/wishlist", "/orders"],
 };
